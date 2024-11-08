@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Insurance Claim Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <!-- Container for Logo -->
+    <div class="logo-container">
+        <img src="{{ url_for('static', filename='NB_logo.png') }}" alt="Logo">
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Car Insurance Claim Prediction</h1>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-container">
+            <form action="/predict" method="POST">
+                <label for="gender">What is the customer's gender?</label>
+                <select name="gender" required>
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                </select>
+
+                <label for="age">What is the customer's age type?</label>
+                <select name="age" required>
+                    <option value="0">Young Adult Driver(16-24)</option>
+                    <option value="3">Experienced Drivers(25-39)</option>
+                    <option value="1">Middle Aged Driver(40-64)</option>
+                    <option value="2">Senior Driver(65+)</option>
+                </select>
+
+                <label for="region_code">Region Code (0-52):</label>
+                <input type="text" name="region" id="region_code" required>
+
+                <label for="previously_insured">Previously insured?</label>
+                <select name="previously_insured" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+
+                <label for="vehicle_age">Vehicle age:</label>
+                <select name="vehicle_age" required>
+                    <option value="0">Less than a year old</option>
+                    <option value="1">One to two years old</option>
+                    <option value="2">More than 2 years old</option>
+                </select>
+
+                <label for="previous_vehicle_damage">Previous vehicle damage?</label>
+                <select name="previous_vehicle_damage" required>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+
+                <label for="annual_premium">Annual premium:</label>
+                <input type="text" name="annual_premium" id="annual_premium" required>
+
+                <input type="submit" value="Predict">
+            </form>
+        </div>
+
+        <!-- Entered Values Section -->
+        {% if prediction_text %}
+        <div class="result-container">
+            <h3>Prediction: {{ prediction_text }}</h3>
+            <h3>Entered Values:</h3>
+            <ul>
+                <li>Gender: {{ entered_values.gender }}</li>
+                <li>Age: {{ entered_values.age }}</li>
+                <li>Region Code: {{ entered_values.region }}</li>
+                <li>Northbridge Customer: {{ entered_values.previously_insured }}</li>
+                <li>Vehicle Age: {{ entered_values.vehicle_age }}</li>
+                <li>Vehicle Damage: {{ entered_values.previous_vehicle_damage }}</li>
+                <li>Annual Premium: {{ entered_values.annual_premium }}</li>
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if error_message %}
+        <p class="error-message">{{ error_message }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>
